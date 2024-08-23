@@ -29,13 +29,19 @@ public class LikeFor {
         //while
         int j = 0;
         while(j < 3){
-            System.out.println("hello world");
+            System.out.println("hello world----");
             j++;
         }
 
+        //do-while 肯定会执行一次
+        int m = 6;
+        do{
+            System.out.println("hello world");
+            m++;
+        }while (m < 4);
 
-        
 
+        //总结：for用户知道次数，不知道次数用while。do-while是肯定先运行一次，比如抢票软件。
 
     }
 }
