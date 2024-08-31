@@ -23,7 +23,7 @@ public class ATMSystem {
             int command = sc.nextInt();
             switch (command){
                 case 1:
-
+                    login(accounts, sc);
                     break;
 
                 case 2:
@@ -33,6 +33,37 @@ public class ATMSystem {
                     System.out.println("操作不存在");
             }
         }
+    }
+
+    private static void login(ArrayList<Account> accounts, Scanner sc) {
+        System.out.println("===================系统登录操作===================");
+        if(accounts.size() == 0){
+            System.out.println("对不起，系统中无账户");
+            return;
+        }
+
+        while (true) {
+            System.out.println("请输入卡号");
+            String cardId = sc.next();
+            Account acc = getAccountByCardId(cardId, accounts);
+            if(acc != null){//卡号存在
+                //认证密码
+                while (true) {
+                    System.out.println("请输入密码");
+                    String password = sc.next();
+                    if(acc.getPassWord().equals(password)){
+                        //登录成功
+                        System.out.println("恭喜你" + acc.getUserName() + "，登录成功！" + "卡号" +acc.getCardId());
+
+                    }else{
+                        System.out.println("输入的密码有误");
+                    }
+                }
+            }else{
+                System.out.println("不存在该账户卡号");
+            }
+        }
+
     }
 
     private static void register(ArrayList<Account> accounts, Scanner sc) {
@@ -67,7 +98,7 @@ public class ATMSystem {
 
 
         accounts.add(account);
-        System.out.println("恭喜"+userName+"，开户成功");
+        System.out.println("恭喜"+userName+"，开户成功"+"，卡号 " + cardId);
 
     }
 
