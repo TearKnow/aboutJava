@@ -94,17 +94,54 @@ public class ATMSystem {
                     transferMoney(sc, acc, accounts);//转账功能
                     break;
                 case 5:
-
-                    break;
+                    updatePassword(sc, acc);//修改密码
+                    return;//退出到首页
                 case 6:
                     System.out.println("退出成功");
                     return;//退出当前方法
                 case 7:
-
+                    //销户，从集合中删掉
+                    System.out.println("你真的要销户?y/n");
+                    String answer = sc.next();
+                    switch (answer){
+                        case "y"://真的销户
+                            accounts.remove(acc);
+                            System.out.println("销户完成");
+                            return;//回到首页
+                        default:
+                            System.out.println("你好，继续保留");
+                    }
                     break;
                 default:
                     System.out.println("您操作的指令错误");
                     break;
+            }
+        }
+    }
+
+    private static void updatePassword(Scanner sc, Account acc) {
+        System.out.println("============密码===============");
+        while (true) {
+            System.out.println("请输入当前密码");
+            String password = sc.next();
+            if(acc.getPassWord().equals(password)){
+                while (true) {
+                    System.out.println("输入新密码");
+                    String newPassword = sc.next();
+
+                    System.out.println("输确认密码");
+                    String okPassword = sc.next();
+
+                    if(newPassword.equals(okPassword)){
+                        acc.setPassWord(newPassword);
+                        System.out.println("恭喜你，密码修改成功");
+                        return;
+                    }else{
+                        System.out.println("两次密码不同");
+                    }
+                }
+            }else{
+                System.out.println("输入的密码不对");
             }
         }
     }
