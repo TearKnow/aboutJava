@@ -55,7 +55,7 @@ public class ATMSystem {
                         //登录成功
                         System.out.println("恭喜你" + acc.getUserName() + "，登录成功！" + "卡号" +acc.getCardId());
                         //展示登录后的操作页
-                        showUserCommand(sc, acc);
+                        showUserCommand(sc, acc, accounts);
                         return;
                     }else{
                         System.out.println("输入的密码有误");
@@ -68,7 +68,7 @@ public class ATMSystem {
 
     }
 
-    private static void showUserCommand(Scanner sc, Account acc) {
+    private static void showUserCommand(Scanner sc, Account acc, ArrayList<Account> accounts) {
         while (true) {
             System.out.println("==============用户操作页================");
             System.out.println("1. 查询账户");
@@ -91,7 +91,7 @@ public class ATMSystem {
                     drawMoney(acc, sc);//取钱
                     break;
                 case 4:
-
+                    transferMoney(sc, acc, accounts);//转账功能
                     break;
                 case 5:
 
@@ -107,6 +107,62 @@ public class ATMSystem {
                     break;
             }
         }
+    }
+
+    private static void transferMoney(Scanner sc, Account acc, ArrayList<Account> accounts) {
+        System.out.println("============转账===============");
+        if(accounts.size() < 2){
+            System.out.println("账户不足2个，请先去开户");
+            return;
+        }
+
+        if(acc.getMoney() == 0){
+            System.out.println("对不起，你自己都没钱，就别转了");
+            return;
+        }
+
+        while (true) {
+            System.out.println("请输入对方卡号：");
+            String cardId = sc.next();
+
+            //卡号不能自己的
+            if(cardId.equals(acc.getCardId())){
+                System.out.println("不可以给自己转账");
+                continue;//结束当前执行，死循环进入下一次
+            }
+
+            Account account = getAccountByCardId(cardId, accounts);
+            if(account == null){
+                System.out.println("对不起，你输入的账号不存在");
+            }else{
+                //认证对方姓名
+                String username = account.getUserName();//皮小样
+                String tip = "*" + username.substring(1);
+                System.out.println("请输入"+tip+"的姓");
+                String preName = sc.next();
+
+                if(username.startsWith(preName)){// !!!!!!!!!!!!!!!
+                    while (true) {
+                        //认证通过，真正开始转账
+                        System.out.println("请输入转账金额");
+                        double money = sc.nextDouble();
+                        if(money > acc.getMoney()){
+                            System.out.println("你的余额不足，最多可以转" + acc.getMoney());
+                        }else{
+                            acc.setMoney(acc.getMoney() - money);
+                            account.setMoney(account.getMoney() + money);
+                            System.out.println("===========转账成功，你的账号还有========" + acc.getMoney());
+                            return;
+                        }
+                    }
+                }else{
+                    System.out.println("对不起，你输入的信息错误");
+                }
+            }
+        }
+
+
+
     }
 
     private static void drawMoney(Account acc, Scanner sc) {
