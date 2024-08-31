@@ -54,7 +54,9 @@ public class ATMSystem {
                     if(acc.getPassWord().equals(password)){
                         //登录成功
                         System.out.println("恭喜你" + acc.getUserName() + "，登录成功！" + "卡号" +acc.getCardId());
-
+                        //展示登录后的操作页
+                        showUserCommand(sc, acc);
+                        return;
                     }else{
                         System.out.println("输入的密码有误");
                     }
@@ -64,6 +66,54 @@ public class ATMSystem {
             }
         }
 
+    }
+
+    private static void showUserCommand(Scanner sc, Account acc) {
+        while (true) {
+            System.out.println("==============用户操作页================");
+            System.out.println("1. 查询账户");
+            System.out.println("2. 存款");
+            System.out.println("3. 取款");
+            System.out.println("4. 转账");
+            System.out.println("5. 修改密码");
+            System.out.println("6. 退出");
+            System.out.println("7. 注销");
+            System.out.println("请选择");
+            int command = sc.nextInt();
+            switch (command){
+                case 1:
+                    showAccount(acc);
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+                    System.out.println("退出成功");
+                    return;//退出当前方法
+                case 7:
+
+                    break;
+                default:
+                    System.out.println("您操作的指令错误");
+                    break;
+            }
+        }
+    }
+
+    private static void showAccount(Account acc) {
+        System.out.println("==============当前账户信息======");
+        System.out.println("卡号：" + acc.getCardId());
+        System.out.println("卡户：" + acc.getUserName());
+        System.out.println("余额：" + acc.getMoney());
     }
 
     private static void register(ArrayList<Account> accounts, Scanner sc) {
