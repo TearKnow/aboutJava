@@ -2,6 +2,7 @@ package com.jack.learnATM;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ATMSystem {
@@ -26,11 +27,77 @@ public class ATMSystem {
                     break;
 
                 case 2:
-
+                    register(accounts, sc);
                     break;
                 default:
                     System.out.println("操作不存在");
             }
         }
     }
+
+    private static void register(ArrayList<Account> accounts, Scanner sc) {
+        System.out.println("===================系统开户操作===================");
+        Account account = new Account();
+
+        System.out.println("请输入账户用户名");
+        String userName = sc.next();
+        account.setUserName(userName);
+
+        while (true) {
+            System.out.println("请输入账户密码");
+            String password = sc.next();
+            System.out.println("请再次输入密码");
+            String okPassword = sc.next();
+            if(okPassword.equals(password)){
+                account.setPassWord(okPassword);
+                break;
+            }else{
+                System.out.println("对不起，两次输入密码错误");
+            }
+        }
+
+        System.out.println("请输入账户限额");
+        double quotaMoney = sc.nextDouble();
+        account.setQuotaMoney(quotaMoney);
+
+
+        //随机一个8位唯一的卡号
+        String cardId = getRandomCardId(accounts);
+        account.setCardId(cardId);
+
+
+        accounts.add(account);
+        System.out.println("恭喜"+userName+"，开户成功");
+
+    }
+
+    //生存随机卡号
+    private static String getRandomCardId(ArrayList<Account> accounts) {
+        Random r = new Random();
+
+        while (true) {
+            String cardId = "";
+
+            for (int i = 0; i < 8; i++) {
+                cardId += r.nextInt(10);
+            }
+
+            Account newAccount = getAccountByCardId(cardId, accounts);
+            if(newAccount == null){//可以使用新卡号了，因为没查到
+                return cardId;
+            }
+        }
+    }
+
+    private static Account getAccountByCardId(String cardId, ArrayList<Account> accounts) {
+        for (int i = 0; i < accounts.size(); i++) {
+            Account tmpAccount = accounts.get(i);
+            if(tmpAccount.getCardId().equals(cardId)){
+                return tmpAccount;
+            }
+        }
+        return null;//查不到账号
+    }
+
+
 }
