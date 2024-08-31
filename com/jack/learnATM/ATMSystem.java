@@ -85,7 +85,7 @@ public class ATMSystem {
                     showAccount(acc);
                     break;
                 case 2:
-
+                    depositMoney(acc, sc);//存款
                     break;
                 case 3:
 
@@ -107,6 +107,16 @@ public class ATMSystem {
                     break;
             }
         }
+    }
+
+    private static void depositMoney(Account acc, Scanner sc) {
+        System.out.println("============用户存钱================");
+        System.out.println("请输入库存金额：");
+        double money = sc.nextDouble();
+
+        acc.setMoney(acc.getMoney() + money);
+        System.out.println("恭喜，存款成功，当前信息如下：" + money);
+        showAccount(acc);
     }
 
     private static void showAccount(Account acc) {
