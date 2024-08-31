@@ -88,7 +88,7 @@ public class ATMSystem {
                     depositMoney(acc, sc);//存款
                     break;
                 case 3:
-
+                    drawMoney(acc, sc);//取钱
                     break;
                 case 4:
 
@@ -107,6 +107,33 @@ public class ATMSystem {
                     break;
             }
         }
+    }
+
+    private static void drawMoney(Account acc, Scanner sc) {
+        System.out.println("============取存钱================");
+        if(acc.getMoney() < 100){
+            System.out.println("余额不足, 不够100");
+            return;
+        }
+
+        while (true) {
+            System.out.println("请输入取款金额");
+            double money = sc.nextDouble();
+
+            if(money > acc.getQuotaMoney()){
+                System.out.println("对不起，超过限额，每次最多" + acc.getQuotaMoney());
+            }else{
+                if(money > acc.getMoney()){
+                    System.out.println("对不对，你的余额不足, 只有" + acc.getMoney());
+                }else{
+                    System.out.println("恭喜，取钱"+money+"元，成功！");
+                    acc.setMoney(acc.getMoney() - money);
+                    showAccount(acc);
+                    return;//干掉取钱方法
+                }
+            }
+        }
+
     }
 
     private static void depositMoney(Account acc, Scanner sc) {
