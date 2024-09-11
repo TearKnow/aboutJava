@@ -13,7 +13,7 @@ public class SimpleArray {
 
 
         int[] cc = {1,2,3,4};
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < cc.length; i++) {
             System.out.print(cc[i]);
         }
 
