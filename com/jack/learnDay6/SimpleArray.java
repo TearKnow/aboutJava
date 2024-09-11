@@ -1,5 +1,7 @@
 package com.jack.learnDay6;
 
+import java.util.Arrays;
+
 public class SimpleArray {
     public static void main(String[] args) {
 
@@ -18,5 +20,8 @@ public class SimpleArray {
         }
 
 
+        System.out.println(Arrays.toString(cc));//[1,2,3,4]这样打印的
+
+        System.out.println(cc.toString());//这里是地址
     }
 }
